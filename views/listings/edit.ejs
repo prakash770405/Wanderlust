@@ -9,34 +9,34 @@
                 <form method="post" action="/listings/<%=listing._id %>?_method=PUT">
                     <div>
                         <label for="title" class="form-label fw-bold">Title</label>
-                        <input type="text" name="listing[title]" value="<%=listing.title %>" class="form-control">
+                        <input type="text" name="listing[title]" required value="<%=listing.title %>" class="form-control">
                         <!--listing[title] ye variablename[title] hai-->
                     </div>
                     <div>
                         <label for="Description" class="form-label fw-bold ">Description</label>
-                        <textarea name="listing[description]" class="form-control"><%=listing.description %></textarea>
+                        <textarea name="listing[description]" required class="form-control"><%=listing.description %></textarea>
                     </div>
                     <div>
                         <label for="image" class="form-label fw-bold">Image/URL</label>
-                        <input type="text" name="listing[image.url]" value="<%=listing.image.url%>"
+                        <input type="text" name="listing[image.url]" required value="<%=listing.image.url%>"
                             class="form-control"><!--listing[image.url]-->
 
                     </div>
                     <div class="row">
                         <div class=" mb-3 col-md-4">
                             <label for="price" class="form-label fw-bold">Price</label>
-                            <input type="number" name="listing[price]" value="<%=listing.price %>" class="form-control">
+                            <input type="number" name="listing[price]" required value="<%=listing.price %>" class="form-control">
                         </div>
                         <div class="mb-3 col-md-8">
                             <label for="country" class="form-label fw-bold">Country</label>
-                            <input type="text" name="listing[country]" value="<%=listing.country %>"
+                            <input type="text" name="listing[country]" required value="<%=listing.country %>"
                                 class="form-control">
                         </div>
                     </div>
 
                     <div>
                         <label for="location" class="form-label fw-bold">location</label>
-                        <input type="text" name="listing[location]" value="<%=listing.location %>" class="form-control">
+                        <input type="text" name="listing[location]" required value="<%=listing.location %>" class="form-control">
                     </div>
                     <br>
                     <button class="btn btn-dark add-btn mb-3">edit</button>

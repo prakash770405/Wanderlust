@@ -92,3 +92,25 @@ border:none;
     display: flex;
 
  }
+
+/* Center the listing show page content while preserving navbar/footer layout */
+.show-wrapper{
+    /* ensure the wrapper grows to available container height */
+    min-height: 60vh;
+    width: 100%;
+}
+.show-card{
+    max-width: 600px;
+    width: 100%;
+    background: transparent;
+    border-radius: 0.5rem;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* keep image responsive but with same visual height as before */
+.show-card .show-img{
+    height: 30vh;
+    object-fit: cover !important;
+    width: 100%;
+}
