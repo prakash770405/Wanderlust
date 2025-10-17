@@ -2,14 +2,13 @@
 
 <div class="show-wrapper d-flex justify-content-center align-items-center">
     <div class="show-card card p-4">
-        <h1 class="mb-3 text-center">Listing details</h1>
+        <h2 class="mb-3 text-center"><%= listing.title %></h2>
 
         <div class="text-center mb-3">
             <img src="<%= listing.image.url %>" alt="listing image" class="show-img img-fluid rounded"  style="height: 17rem;"/>
         </div>
 
-        <ul class="list-unstyled mb-3">
-            <li class="h4 mb-2"><%= listing.title %></li>
+        <ul class="list-unstyled mb-3">   
             <li class="mb-2"><%= listing.description %></li>
             <li class="mb-2">Price:&nbsp;&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
             <li class="mb-2">Location:&nbsp;<%= listing.location %></li>
@@ -21,6 +20,24 @@
             <form action="/listings/<%=listing._id %>?_method=DELETE" method="post" class="m-0">
                 <button class="btn btn-danger ">Delete</button>
             </form>
-        </div>
+        </div><br><br>
+        <hr>
+         <div class=" p-2">
+                <h4>Add Review</h4>
+                <br>
+                <form action="/listings/<%=listing._id%>/reviews" method="post" novalidate class="needs-validation">
+                    <div>
+                        <label for="rating" >Rating 1 to 5 &#9733;&#9733;&#9733;</label>
+                        <input class="form-range" type="range" id="rating" min="1" max="5" name="review[rating]" required >
+                    </div>
+                    <div >
+                        <label for="comment"  class="form-label ">Comments</label>
+                        <textarea  class="form-control w-100" name="review[comment]" id="comment" rows="3" cols="50"  required placeholder="Comments..."></textarea>
+                        <div class="invalid-feedback">Enter comments about this page</div>
+                    </div>
+                    <br>
+                  <button class=" btn btn-outline-dark ">submit</button>
+                </form>
+            </div>
     </div>
 </div>

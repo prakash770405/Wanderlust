@@ -79,8 +79,7 @@ body{
     flex: 1;
 }
 .add-btn{
-background-color: #fe424d !important;
-border:none;
+
 }
 /* kksk */
  .show-img{
@@ -89,7 +88,7 @@ border:none;
  }
  .btns
  {
-    display: flex;
+   
 
  }
 

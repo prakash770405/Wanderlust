@@ -1,9 +1,11 @@
 const express= require("express")
 const mongoose=require("mongoose");
-const Listing=require("./models/listing.js")
+const Listing=require("./models/listing.js")      //fetching listing schema for database..
+const Review=require("./models/review.js")       //fetching review schema for database..
 const path=require("path");
 const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
+const review = require("./models/review.js");
 const app= express();
 
 app.engine("ejs",ejsMate);
@@ -98,4 +100,16 @@ app.delete("/listings/:id",async(req,res)=>{
   let {id}=req.params;
   await Listing.findByIdAndDelete(id);
   res.redirect("/listings");
+})
+
+//-------------------------------------reviews route
+app.post("/listings/:id/reviews",async(req,res)=>{
+  let {id}=req.params;
+ let listing= await Listing.findById(id)
+ let newReview=new Review(req.body.review)
+ listing.reviews.push(newReview);
+  await newReview.save();
+  await listing.save();
+  console.log("new review saved");
+  res.redirect(`/listings/${listing._id}`);
 })
