@@ -1,43 +1,67 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="show-wrapper d-flex justify-content-center align-items-center">
-    <div class="show-card card p-4">
-        <h2 class="mb-3 text-center"><%= listing.title %></h2>
-
-        <div class="text-center mb-3">
-            <img src="<%= listing.image.url %>" alt="listing image" class="show-img img-fluid rounded"  style="height: 17rem;"/>
-        </div>
-
-        <ul class="list-unstyled mb-3">   
-            <li class="mb-2"><%= listing.description %></li>
-            <li class="mb-2">Price:&nbsp;&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
-            <li class="mb-2">Location:&nbsp;<%= listing.location %></li>
-            <li class="mb-2">Country:&nbsp;<%= listing.country %></li>
-        </ul>
-
-        <div class="d-flex  gap-4 btns">
-            <a href="/listings/<%=listing._id%>/edit" class="btn btn-outline-primary ">Edit</a>
-            <form action="/listings/<%=listing._id %>?_method=DELETE" method="post" class="m-0">
-                <button class="btn btn-danger ">Delete</button>
-            </form>
-        </div><br><br>
-        <hr>
-         <div class=" p-2">
-                <h4>Add Review</h4>
-                <br>
+    <div class="show-wrapper d-flex justify-content-center align-items-center">
+        <div class="show-card card p-4">
+            <h2 class="mb-3 text-center">
+                <%= listing.title %>
+            </h2>
+            <div class="text-center mb-3">
+                <img src="<%= listing.image.url %>" alt="listing image" class="show-img img-fluid rounded"
+                    style="height: 17rem;" />
+            </div>
+            <ul class="list-unstyled mb-2">
+                <li class="mb-1">
+                    <%= listing.description %>
+                </li>
+                <li class="mb-2">Price:&nbsp;&#8377;<%= listing.price.toLocaleString("en-IN") %>
+                </li>
+                <li class="mb-2">Location:&nbsp;<%= listing.location %>
+                </li>
+                <li class="mb-2">Country:&nbsp;<%= listing.country %>
+                </li>
+            </ul>
+            <div class="d-flex  gap-4 btns">
+                <a href="/listings/<%=listing._id%>/edit" class="btn btn-outline-primary ">Edit</a>
+                <form action="/listings/<%=listing._id %>?_method=DELETE" method="post" class="m-0">
+                    <button class="btn btn-danger ">Delete</button>
+                </form>
+            </div>
+            <hr>
+            <h4>Add Review</h4>
+            <div class="m-2">
                 <form action="/listings/<%=listing._id%>/reviews" method="post" novalidate class="needs-validation">
                     <div>
-                        <label for="rating" >Rating 1 to 5 &#9733;&#9733;&#9733;</label>
-                        <input class="form-range" type="range" id="rating" min="1" max="5" name="review[rating]" required >
+                        <label for="rating">Rating 1 to 5 &#9733;&#9733;&#9733;</label>
+                        <input class="form-range" type="range" id="rating" min="1" max="5" name="review[rating]"
+                            required>
                     </div>
-                    <div >
-                        <label for="comment"  class="form-label ">Comments</label>
-                        <textarea  class="form-control w-100" name="review[comment]" id="comment" rows="3" cols="50"  required placeholder="Comments..."></textarea>
+                    <div>
+                        <label for="comment" class="form-label ">Comments</label>
+                        <textarea class="form-control w-100" name="review[comment]" id="comment" rows="3" cols="50"
+                            required placeholder="Comments..."></textarea>
                         <div class="invalid-feedback">Enter comments about this page</div>
                     </div>
                     <br>
-                  <button class=" btn btn-outline-dark ">submit</button>
+                    <button class=" btn btn-outline-dark ">submit</button>
                 </form>
             </div>
+            <hr>
+            <h5>All Reviews</h5>
+            <div class="row ms-1 m-2">
+                <% for(review of listing.reviews){ %>
+                      <div class="col-md-6 mb-1">
+                    <div class=" card border rounded shadow-sm h-100" style="width: 16rem; " >
+                        <div class="card-body" >
+                            <p class=" text-body-secondary ms-2"><b>Reviews</b></p>
+                            <div class="card-text text-body-secondary ms-2">
+                                Rating:&nbsp;&nbsp;<%=review.rating %>&#9733;
+                                    <br>Comment:&nbsp;
+                                    <%=review.comment %>.&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
     </div>
-</div>
