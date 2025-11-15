@@ -49,17 +49,19 @@
             <h5>All Reviews</h5>
             <div class="row ms-1 m-2">
                 <% for(review of listing.reviews){ %>
-                      <div class="col-md-6 mb-1">
-                    <div class=" card border rounded shadow-sm h-100" style="width: 16rem; " >
-                        <div class="card-body" >
-                            <p class=" text-body-secondary ms-2"><b>Reviews</b></p>
-                            <div class="card-text text-body-secondary ms-2">
-                                Rating:&nbsp;&nbsp;<%=review.rating %>&#9733;
-                                    <br>Comment:&nbsp;
-                                    <%=review.comment %>.&nbsp;
+                    <div class="col-md-6 mb-1">
+                        <div class=" card border rounded shadow-sm h-100" style="width: 16rem; ">
+                            <div class="card-body">
+                                <p class=" text-body-secondary ms-2 lh-1"><b>Reviews</b></p>
+                                <div class="card-text text-body-secondary ms-2">
+                                    Rating:&nbsp;&nbsp;<%=review.rating %>&#9733;
+                                        <br>Comment:&nbsp;
+                                        <%=review.comment %>.&nbsp;
+                                            <br>
+                                </div>
+                                <div class=" ms-2 pt-4 mb-0 "><button class=" btn btn-outline-dark">delete</button></div>
                             </div>
                         </div>
-                    </div>
                     </div>
                     <% } %>
             </div>

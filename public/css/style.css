@@ -78,19 +78,13 @@ body{
 .container{
     flex: 1;
 }
-.add-btn{
 
-}
 /* kksk */
  .show-img{
     height: 30vh;
 
  }
- .btns
- {
-   
 
- }
 
 /* Center the listing show page content while preserving navbar/footer layout */
 .show-wrapper{
