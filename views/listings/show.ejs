@@ -6,14 +6,14 @@
                 <%= listing.title %>
             </h2>
             <div class="text-center mb-3">
-                <img src="<%= listing.image.url %>" alt="listing image" class="show-img img-fluid rounded"
+                <img src="<%= listing.image %>" alt="listing image" class="show-img img-fluid rounded"
                     style="height: 17rem;" />
             </div>
             <ul class="list-unstyled mb-2">
                 <li class="mb-1">
                     <%= listing.description %>
                 </li>
-                <li class="mb-2">Price:&nbsp;&#8377;<%= listing.price.toLocaleString("en-IN") %>
+                <li class="mb-2">Price:&nbsp;&#8377;<%= listing.price %>
                 </li>
                 <li class="mb-2">Location:&nbsp;<%= listing.location %>
                 </li>
@@ -59,7 +59,9 @@
                                         <%=review.comment %>.&nbsp;
                                             <br>
                                 </div>
-                                <div class=" ms-2 pt-4 mb-0 "><button class=" btn btn-outline-dark">delete</button></div>
+
+                                <div class=" ms-2 pt-4 mb-0 "><a href="/listings/<%= listing._id %>/reviews/<%= review._id %>/delete"
+                                        class=" btn btn-outline-dark ">Delete</a></div>
                             </div>
                         </div>
                     </div>
