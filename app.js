@@ -1,19 +1,22 @@
 const express = require("express")
 const mongoose = require("mongoose");
 const app = express();
-const Listing = require("./models/listing.js")      //fetching listing schema for database..
-const Review = require("./models/review.js")       //fetching review schema for database..
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const { listingSchema } = require("./schema.js"); // we use joi as a schema validator for our listing database 
+const session = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
+const listingRouter = require("./routes/listing.js");  // express router for listings
+const reviewRouter = require("./routes/review.js");    // express router for reviews
+const userRouter=require("./routes/user.js");
 
-const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 app.engine("ejs", ejsMate);
-
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
@@ -28,103 +31,55 @@ async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
 
-const validateListing = (req, res, next) => {
-  let { error } = listingSchema.validate(req.body);  //using joi for creating new listing and validates its schema if all data is filled or not
-  if (error) {
-    throw new ExpressError(400, error.message);
-  }
-  else {
-    next();
+const sessionOptions = {
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
   }
 };
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");// success flash
+  next();
+})
+app.use((req, res, next) => {
+  res.locals.error = req.flash("error");//error flash
+  next();
+})
 
 app.get("/", (req, res) => {
   res.send("working");
 });
 
-//----------------------------------------new listing (create new list)
-app.get("/listings/new", (req, res) => {
-  res.render("./listings/new.ejs");
-});
 
-app.post("/listings",validateListing ,wrapAsync(async (req, res, next) => {
+app.use("/listings", listingRouter)      // express router matches the routes for listing
+app.use("/listings/:id/reviews", reviewRouter)  // express router matches the routes for reviews listings
+app.use("/", userRouter)  // express router matches the routes for users credentials
 
-  const newListing = new Listing(req.body.listing); //<------kuch iss tarah------>
-  await newListing.save();
-  res.redirect("/listings");
-}));
-
-//------------------------------------------------listing index route
-app.get("/listings", wrapAsync(async (req, res) => {
-  const allListing = await Listing.find({});
-  res.render("./listings/index.ejs", { allListing });
-}));
-//----------------------------------------------show route
-app.get("/listings/:id", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  const listing = await Listing.findById(id).populate("reviews");
-  res.render("./listings/show.ejs", { listing });
-}));
-
-//---------------------------------------------edit route
-
-app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  const listing = await Listing.findById(id);
-  res.render("./listings/edit.ejs", { listing });
-}));
-
-//---------------------------------------------update route
-
-app.put("/listings/:id",validateListing ,wrapAsync(async (req, res) => {
-
-  let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  res.redirect(`/listings/${id}`);
-}));
-
-//-----------------------------------delete route
-app.delete("/listings/:id", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  const listing = await Listing.findById(id);
-  await Review.deleteMany({_id: { $in: listing.reviews} });
-  await Listing.findByIdAndDelete(id);
-  res.redirect("/listings");
-}));
-
-//------------------------------------- create new reviews route
-app.post("/listings/:id/reviews", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  let listing = await Listing.findById(id)
-  let newReview = new Review(req.body.review)
-  listing.reviews.push(newReview);
-  await newReview.save();
-  await listing.save();
-  res.redirect(`/listings/${listing._id}`);
-}));
-
-//------------------------------------------delete review route
-app.get("/listings/:listingId/reviews/:reviewId/delete", async (req, res) => {
-    const { listingId, reviewId } = req.params;
-    await Listing.findByIdAndUpdate(listingId, {    // Remove review reference from listing schema
-        $pull: { reviews: reviewId }
-    });
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/listings/${listingId}`);
-});
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found")); // for random undefined routes its says page not found
 });
-
-
 
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err;//if something unknown happens than the exact errror will be displayed
   res.status(statusCode).render("./listings/error.ejs", { message });//like validation error failed due to casting
   // res.status(statusCode).send(message);
 });
-
 
 app.listen(8080, (req, res) => {
   console.log(`app is listening on port 8080`);
