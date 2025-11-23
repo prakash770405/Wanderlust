@@ -3,44 +3,44 @@
         <br>
         <div class="row">
             <div class="col-8 offset-2">
-                <h1>Create new list</h1>
+                <h1 class="text-black">Create new list</h1>
                 <form action="/listings" method="post" novalidate class="needs-validation">
                     <div>
-                        <label for="title" class="form-label fw-bold">Title</label>
+                        <label for="title" class="form-label  mb-1 text-black">Title</label>
                         <input type="text" name="listing[title]" required placeholder="title"
                             class="form-control"><!--listing[title] ye variablename[title] hai-->
                             <div class="invalid-feedback">Enter valid title here..</div>
                     </div>
-                    <div>
-                        <label for="description" class="form-label fw-bold">Description</label>
+                    <div class="mt-2">
+                        <label for="description" class="form-label  mb-1 text-black">Description</label>
                         <textarea name="listing[description]" required placeholder="enter description"
                             class="form-control"></textarea>
                              <div class="invalid-feedback">Enter your listing description..</div>
                     </div>
-                    <div>
-                        <label for="image" class="form-label fw-bold">Image url</label>
+                    <div class="mt-2">
+                        <label for="image" class="form-label  mb-1 text-black">Image url</label>
                         <input type="text" name="listing[image]"  placeholder="enter image url link"
                             class="form-control">
                     </div>
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="mb-3 col-md-4">
-                            <label for="price" class="form-label fw-bold">Price</label>
+                            <label for="price" class="form-label mb-1 text-black">Price</label>
                             <input type="" name="listing[price]" required placeholder="1200" class="form-control">
                              <div class="invalid-feedback">Enter price..</div>
                         </div>
                         <div class="mb-3 col-md-8">
-                            <label for="country" class="form-label fw-bold">Country</label>
+                            <label for="country" class="form-label mb-1 text-black">Country</label>
                             <input type="text" name="listing[country]" required  placeholder="India" class="form-control">
                              <div class="invalid-feedback">Enter your country..</div>
                         </div>
                     </div>
                     <div>
-                        <label for="location" class="form-label fw-bold">Location</label>
+                        <label for="location" class="form-label  mb-1 text-black">Location</label>
                         <input type="text" name="listing[location]" required placeholder="Jaipur,Rajasthan" class="form-control">
                          <div class="invalid-feedback">Enter your location..</div>
                     </div>
                     <br>
-                    <button class="btn btn-dark add-btn mb-3">submit</button>
+                    <button class="btn btn-success add-btn mb-3">submit</button>
                     <br>
                 </form>
             </div>

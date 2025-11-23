@@ -5,7 +5,8 @@ const Listing = require("../models/listing.js")      //fetching listing schema f
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema} = require("../schema.js"); // we use joi as a schema validator for our listing database 
-const Review = require("../models/review.js") 
+const Review = require("../models/review.js"); 
+const { isLoggedIn } = require("../middleware.js");
 
 
 
@@ -21,7 +22,7 @@ const validateListing = (req, res, next) => {
 
 
 //----------------------------------------new listing (create new list)
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn,(req, res) => {
   res.render("./listings/new.ejs");
 });
 
@@ -47,7 +48,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
 
 //---------------------------------------------edit route
 
-router.get("/:id/edit", wrapAsync(async (req, res) => {
+router.get("/:id/edit",isLoggedIn, wrapAsync(async (req, res) => {
   let { id } = req.params;
   const listing = await Listing.findById(id);
   res.render("./listings/edit.ejs", { listing });
@@ -55,7 +56,7 @@ router.get("/:id/edit", wrapAsync(async (req, res) => {
 
 //---------------------------------------------update route
 
-router.put("/:id",validateListing ,wrapAsync(async (req, res) => {
+router.put("/:id",validateListing ,isLoggedIn,wrapAsync(async (req, res) => {
 
   let { id } = req.params;
   await Listing.findByIdAndUpdate(id, { ...req.body.listing });
@@ -64,7 +65,7 @@ router.put("/:id",validateListing ,wrapAsync(async (req, res) => {
 }));
 
 //-----------------------------------delete route
-router.delete("/:id", wrapAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn,wrapAsync(async (req, res) => {
   let { id } = req.params;
   const listing = await Listing.findById(id);
   await Review.deleteMany({_id: { $in: listing.reviews} });

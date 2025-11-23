@@ -7,39 +7,39 @@
                 <h1>Edit your listing</h1>
                 <br>
                 <form method="post" action="/listings/<%=listing._id %>?_method=PUT">
-                    <div>
-                        <label for="title" class="form-label fw-bold">Title</label>
+                    <div class="text-black">
+                        <label for="title" class="form-label mb-1">Title</label>
                         <input type="text" name="listing[title]" required value="<%=listing.title %>" class="form-control">
                         <!--listing[title] ye variablename[title] hai-->
                     </div>
-                    <div>
-                        <label for="Description" class="form-label fw-bold ">Description</label>
+                    <div class="mt-2 text-black">
+                        <label for="Description" class="form-label  mb-1">Description</label>
                         <textarea name="listing[description]" required class="form-control"><%=listing.description %></textarea>
                     </div>
-                    <div>
-                        <label for="image" class="form-label fw-bold">Image/URL</label>
+                    <div class="mt-2 text-black">
+                        <label for="image" class="form-label mb-1">Image/URL</label>
                         <input type="text" name="listing[image]" required value="<%=listing.image%>"
                             class="form-control"><!--listing[image.url]-->
 
                     </div>
-                    <div class="row">
-                        <div class=" mb-3 col-md-4">
-                            <label for="price" class="form-label fw-bold">Price</label>
+                    <div class="row ">
+                        <div class=" mt-2 col-md-4 text-black">
+                            <label for="price" class="form-label mb-1">Price</label>
                             <input type="number" name="listing[price]" required value="<%=listing.price %>" class="form-control">
                         </div>
-                        <div class="mb-3 col-md-8">
-                            <label for="country" class="form-label fw-bold">Country</label>
+                        <div class="mt-2 col-md-8 text-black">
+                            <label for="country" class="form-label mb-1">Country</label>
                             <input type="text" name="listing[country]" required value="<%=listing.country %>"
                                 class="form-control">
                         </div>
                     </div>
 
-                    <div>
-                        <label for="location" class="form-label fw-bold">location</label>
+                    <div class="mt-2 text-black">
+                        <label for="location" class="form-label mb-1">location</label>
                         <input type="text" name="listing[location]" required value="<%=listing.location %>" class="form-control">
                     </div>
                     <br>
-                    <button class="btn btn-dark add-btn mb-3">edit</button>
+                    <button class="btn btn-success add-btn mb-3">edit</button>
                 </form>
             </div>
         </div>

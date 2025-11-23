@@ -54,12 +54,11 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");// success flash
-  next();
-})
-app.use((req, res, next) => {
   res.locals.error = req.flash("error");//error flash
+  res.locals.currUser=req.user;
   next();
 })
+
 
 app.get("/", (req, res) => {
   res.send("working");
