@@ -1,8 +1,8 @@
 <% layout("/layouts/boilerplate.ejs") %>
     <body>
         <br>
-        <div class="row">
-            <div class="col-8 offset-2">
+        <div class="row text-black">
+            <div class="col-8 offset-2 text-black">
                 <h1 class="text-black">Create new list</h1>
                 <form action="/listings" method="post" novalidate class="needs-validation">
                     <div>
@@ -25,7 +25,7 @@
                     <div class="row mt-2">
                         <div class="mb-3 col-md-4">
                             <label for="price" class="form-label mb-1 text-black">Price</label>
-                            <input type="" name="listing[price]" required placeholder="1200" class="form-control">
+                            <input type="number" name="listing[price]" required placeholder="1200" class="form-control">
                              <div class="invalid-feedback">Enter price..</div>
                         </div>
                         <div class="mb-3 col-md-8">

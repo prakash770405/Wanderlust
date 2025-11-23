@@ -4,10 +4,9 @@
         <div class="row">
             <div class="col-8 offset-2">
                 <br>
-                <h1>Edit your listing</h1>
-                <br>
+                <h1 class="mb-2 text-black">Edit your listing</h1>
                 <form method="post" action="/listings/<%=listing._id %>?_method=PUT">
-                    <div class="text-black">
+                    <div class="text-black ">
                         <label for="title" class="form-label mb-1">Title</label>
                         <input type="text" name="listing[title]" required value="<%=listing.title %>" class="form-control">
                         <!--listing[title] ye variablename[title] hai-->

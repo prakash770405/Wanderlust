@@ -12,7 +12,7 @@ const User = require("./models/user.js");
 
 const listingRouter = require("./routes/listing.js");  // express router for listings
 const reviewRouter = require("./routes/review.js");    // express router for reviews
-const userRouter=require("./routes/user.js");
+const userRouter=require("./routes/user.js");           // express router for users
 
 const ExpressError = require("./utils/ExpressError.js");
 
@@ -51,14 +51,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");// success flash
   res.locals.error = req.flash("error");//error flash
   res.locals.currUser=req.user;
   next();
 })
-
 
 app.get("/", (req, res) => {
   res.send("working");
