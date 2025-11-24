@@ -62,7 +62,6 @@ app.get("/", (req, res) => {
   res.send("working");
 });
 
-
 app.use("/listings", listingRouter)      // express router matches the routes for listing
 app.use("/listings/:id/reviews", reviewRouter)  // express router matches the routes for reviews listings
 app.use("/", userRouter)  // express router matches the routes for users credentials
